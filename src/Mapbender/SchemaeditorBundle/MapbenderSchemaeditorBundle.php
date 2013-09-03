@@ -13,15 +13,15 @@ class MapbenderSchemaeditorBundle extends MapbenderBundle
         return array(
             array(
                 'weight' => 40,
-                'title' => 'Featureconf',
-                'route' => 'mapbender_schemaeditor_default_index',
+                'title' => 'Schemaconf',
+                'route' => 'mapbender_schemaeditor_schema_index',
                 'routes' => array(
-                    'mapbender_schemaeditor_default_index',
-                    'mapbender_schemaeditor_default_new',
+                    'mapbender_schemaeditor_schema_index',
+                    'mapbender_schemaeditor_schema_new',
                 ),
                 'subroutes' => array(
-                    array('title'=>'New Feature',
-                          'route'=>'mapbender_schemaeditor_default_new',
+                    array('title'=>'New Schema',
+                          'route'=>'mapbender_schemaeditor_schema_new',
                           'enabled' => function($securityContext) {
                                 $oid = new ObjectIdentity('class', 'Mapbender\CoreBundle\Entity\Application');
                                 return $securityContext->isGranted('CREATE', $oid);

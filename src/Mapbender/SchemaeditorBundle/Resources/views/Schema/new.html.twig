@@ -1,0 +1,56 @@
+{% extends "FOMManagerBundle::manager.html.twig" %}
+
+{% block title %}{{ 'New Schema' | trans }}{% endblock %}
+
+{% block manager_content %}
+
+{# 
+    @todo: Ask Vadim for serviceAddBox
+#}
+<fieldset class="left box serviceAddBox" style="width:100%">
+    <legend>Schema</legend>
+{% if tables is defined and tables is not null %}
+    <form action="{{ path("mapbender_schemaeditor_schema_edit") }}" method="post">
+{% else %}
+    <form action="{{ path("mapbender_schemaeditor_schema_create") }}" method="post">
+{% endif %}
+            
+        <label class="left labelInput">Example:</label>
+        <div class="inputWrapper">
+            <i>postgresql://user:password@host:port/dbname</i>
+        </div>
+        <div class="clearContainer"></div>
+        <label for="schemaeditor_url" class="left labelInput">URL:</label>
+        <div class="inputWrapper">
+            <input type="text" id="schemaeditor_url" class="input validationInput" name="schemaeditor[url]" value="{% if url is defined %}{{ url }}{% endif %}" />
+        </div>
+
+{% if tables is defined and tables is not null %}
+        <label for="schemaeditor_table" class="left labelInput">Table:</label>
+        <div class="inputWrapper">
+            {# 
+                @todo: Ask Vadim for nice select box
+            #}
+            <select name="schemaeditor[table]" id="schemaeditor_table">
+                <option value=""></option>
+{% for table in tables %}
+                <option value="{{ table }}">{{ table }}</option>
+{% endfor %}
+            </select>
+        </div>
+{% endif %}
+        
+        <div class="clearContainer"></div>
+
+        <div class="clearContainer"></div>
+        <div class="clearContainer"></div>
+        <br/>
+        <div class="right">
+            <input class="button" type="submit" name="load" value="Load" />
+            <a href="{{ path("mapbender_schemaeditor_schema_index") }}" class="button critical">Cancel</a>
+        </div>
+    </form>
+</fieldset>
+<div class="clearContainer"></div>
+{% endblock %}
+

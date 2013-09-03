@@ -1,0 +1,35 @@
+{% extends "FOMManagerBundle::manager.html.twig" %}
+
+{% block title %}{{ 'Schemes' | trans }}{% endblock %}
+
+{% block js %}
+{{parent()}}
+<script type="text/javascript" src="{{ asset('bundles/mapbendermanager/js/schema-list.js') }}"></script>
+{% endblock %}
+
+{% block manager_content %}
+{% if schemes > 0 %}
+    <ul id="listFilterSchemes" class="listFilterContainer clear listFilterBoxes listFilterServiceBoxes">
+    {% for schema in schemes %}
+        <li class="filterItem">
+        <div class="col1">
+          <span class="smallerText">{{ schema.id }}</span><br>
+        </div>
+        <div class="col2 box">
+          <a href="{{ url("mapbender_schemaeditor_schema_edit",{"schemaId":schema.id}) }}" class="title">{{ schema.description }}</a>
+          <div class="buttonGroup">
+            <a class="iconEdit iconBig" href="{{ url("mapbender_schemaeditor_schema_edit",{"schemaId":schema.id}) }}" title="{{ 'Edit schema' | trans }} {{ schema.description }}"></a>
+            <span class="iconRemove iconBig"
+                title="{{"Delete schema"|trans}} {{ schema.description }}"
+                data-url="{{ url("mapbender_schemaeditor_schema_delete",{"schemaId":schema.id}) }}"
+                data-id="{{ schema.id }}"></span>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <span class="description">{% trans %}No schema available.{% endtrans %}</span>
+{% endif %}
+<div class="clearContainer"></div>
+{% endblock %}
