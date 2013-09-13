@@ -28,6 +28,11 @@
           {% endif %}
           <div class="buttonGroup">
             <a class="iconView iconBig" href="{{ url("mapbender_manager_repository_view",{"sourceId":source.id}) }}" title="{{ 'View service metadata' | trans }}"></a>
+            {% if is_granted('EDIT', source) %}
+               <a class="iconUpdate iconBig"
+                title="{{"Update service"|trans}} {{ source.title }}"
+                href="{{ url("mapbender_manager_repository_update",{"sourceId":source.id}) }}">UPDATE</a>
+            {% endif %}
             {% if is_granted('DELETE', source) %}
                <span class="iconRemove iconBig"
                 title="{{"Delete service"|trans}} {{ source.title }}"
