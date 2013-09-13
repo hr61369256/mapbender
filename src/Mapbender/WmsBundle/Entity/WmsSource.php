@@ -103,7 +103,7 @@ class WmsSource extends Source
     protected $userLayer = false;
 
     /**
-     * @var boolean A user layer
+     * @var boolean A user style
      * @ORM\Column(type="boolean", nullable=true)
      */
     protected $userStyle = false;
@@ -1028,6 +1028,23 @@ class WmsSource extends Source
         }
         $em->remove($wmslayer);
         $em->flush();
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function isUpdateable(Source $updatedWmsSource)
+    {
+	// @TODO
+	return false;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function updateFromSource(Source $updatedWmsSource)
+    {
+	
     }
 
 }

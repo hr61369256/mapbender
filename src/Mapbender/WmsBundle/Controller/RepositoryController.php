@@ -232,6 +232,93 @@ class RepositoryController extends Controller
     }
 
     /**
+     * @ManagerRoute("/{sourceId}/update")
+     * @Method({ "POST" })
+     * @Template("MapbenderWmsBundle:Repository:new.html.twig")
+     */
+    public function updateAction($sourceId)
+    {
+	$wmssourceToUpdate = $this->getDoctrine()
+		->getRepository("MapbenderCoreBundle:Source")->find($sourceId);
+
+	$securityContext = $this->get('security.context');
+	$oid = new ObjectIdentity('class', 'Mapbender\CoreBundle\Entity\Source');
+	if(false === $securityContext->isGranted('CREATE', $oid))
+	{
+	    throw new AccessDeniedException();
+	}
+	$purl = parse_url($wmssourceToUpdate->getOriginUrl());
+	if(!isset($purl['scheme']) || !isset($purl['host']))
+	{
+	    $this->get("logger")->debug("The url is not valid.");
+	    $this->get('session')->setFlash('error', "The url is not valid.");
+	    return $this->redirect($this->generateUrl(
+			"mapbender_manager_repository_index", array(), true));
+	}
+	$proxy_config = $this->container->getParameter("owsproxy.proxy");
+	$proxy_query = ProxyQuery::createFromUrl(trim($wmssourceToUpdate->getOriginUrl()),
+		$wmssourceToUpdate->getUsername(), $wmssourceToUpdate->getPassword());
+	if($proxy_query->getGetPostParamValue("request", true) === null)
+	{
+	    $proxy_query->addQueryParameter("request", "GetCapabilities");
+	}
+	if($proxy_query->getGetPostParamValue("service", true) === null)
+	{
+	    $proxy_query->addQueryParameter("service", "WMS");
+	}
+	$proxy = new CommonProxy($proxy_config, $proxy_query);
+
+	$wmssource = null;
+	try
+	{
+	    $browserResponse = $proxy->handle();
+	    $content = $browserResponse->getContent();
+	    $doc = WmsCapabilitiesParser::createDocument($content);
+	    $wmsParser = WmsCapabilitiesParser::getParser($doc);
+	    $wmssource = $wmsParser->parse();
+	}
+	catch(\Exception $e)
+	{
+	    $this->get("logger")->debug($e->getMessage());
+	    $this->get('session')->setFlash('error', $e->getMessage());
+	    return $this->redirect($this->generateUrl(
+			"mapbender_manager_repository_view", array(), true));
+	}
+
+	if(!$wmssource)
+	{
+	    $this->get("logger")->debug('Could not parse data for url "'
+		. $wmssourceToUpdate->getOriginUrl() . '"');
+	    $this->get('session')->setFlash('error',
+		'Could not parse data for url "'
+		. $wmssourceToUpdate->getOriginUrl() . '"');
+	    return $this->redirect($this->generateUrl(
+			"mapbender_manager_repository_view", array(), true));
+	}
+
+	if($wmssourceToUpdate->isUpdateable($wmssource))
+	{
+	    $wmssourceToUpdate->updateFromSource($wmssource);
+	    $this->get('session')->setFlash('success',
+		"The Wms Source has been updated.");
+	    return $this->redirect($this->generateUrl(
+			"mapbender_manager_repository_view",
+			array(
+			"sourceId" => $wmssourceToUpdate->getId()), true));
+	}
+	else
+	{
+	    $this->get("logger")->debug("The Wms Source can not be updated.");
+	    $this->get('session')->setFlash('error',
+		"The Wms Source can not be updated.");
+	    return $this->redirect($this->generateUrl(
+			"mapbender_manager_repository_view",
+			array(
+			"sourceId" => $wmssourceToUpdate->getId()), true));
+	}
+    }
+
+    /**
      * Removes a WmsInstance
      *
      * @ManagerRoute("/{slug}/instance/{instanceId}/delete")

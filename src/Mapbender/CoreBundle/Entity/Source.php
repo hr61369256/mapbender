@@ -158,11 +158,29 @@ abstract class Source
 
     /**
      * Creates a SourceInstance
+     * 
+     * @return SourceInstance a new SourceInstance.
      */
     public abstract function createInstance();
 
     /**
-     * Remove a source from a database
+     * Remove a source from a database.
+     * 
+     * @param EntityManager $em an EntityManager
      */
     public abstract function remove(EntityManager $em);
+    
+    /**
+     * Checks if a source is updateable.
+     * 
+     * @param Source $source an updated source.
+     * @return true if all source's instances can be updated otherwise false.
+     */
+    public abstract function isUpdateable(Source $updatedSource);
+    
+    /**
+     * Update a source from a source
+     * @param Source $updatedSource  an updated source.
+     */
+    public abstract function updateFromSource(Source $updatedSource);
 }

@@ -121,6 +121,27 @@ class RepositoryController extends Controller
 		array("sourceId" => $source->getId())
 	);
     }
+    /**
+     * @ManagerRoute("/source/{sourceId}/update")
+     * @Method({"GET"})
+     * @Template
+     */
+    public function updateAction($sourceId)
+    {
+	$source = $this->getDoctrine()
+		->getRepository("MapbenderCoreBundle:Source")->find($sourceId);
+	$securityContext = $this->get('security.context');
+	if(false === $securityContext->isGranted('EDIT', $source))
+	{
+	    throw new AccessDeniedException();
+	}
+	$managers = $this->get('mapbender')->getRepositoryManagers();
+	$manager = $managers[$source->getManagertype()];
+	return $this->forward(
+		$manager['bundle'] . ":" . "Repository:update",
+	    array("sourceId" => $source->getId())
+	);
+    }
 
     /**
      *
