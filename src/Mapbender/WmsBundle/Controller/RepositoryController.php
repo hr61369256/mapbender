@@ -2,6 +2,7 @@
 
 namespace Mapbender\WmsBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOM\ManagerBundle\Configuration\Route as ManagerRoute;
 use Mapbender\CoreBundle\Component\Utils;
 use Mapbender\CoreBundle\Component\Exception\NotSupportedVersionException;
@@ -148,10 +149,8 @@ class RepositoryController extends Controller
 		return $this->redirect($this->generateUrl(
 			    "mapbender_manager_repository_new", array(), true));
 	    }
-	    $wmsWithSameTitle = $this->getDoctrine()
-		->getEntityManager()
-		->getRepository("MapbenderWmsBundle:WmsSource")
-		->findByTitle($wmssource->getTitle());
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $wmsWithSameTitle = $this->getDoctrine()->getRepository("MapbenderWmsBundle:WmsSource")->findByTitle($wmssource->getTitle());
 
 	    if(count($wmsWithSameTitle) > 0)
 	    {
@@ -159,11 +158,45 @@ class RepositoryController extends Controller
 	    }
 
 	    $wmssource->setOriginUrl($wmssource_req->getOriginUrl());
+	    $keywords = new ArrayCollection();
+	    foreach($wmssource->getKeywords() as $keyword)
+	    {
+		$kwd = $this->getDoctrine()->getRepository("MapbenderCoreBundle:Keyword")->find($keyword->getId());
+		if($kwd)
+		{
+		    $keywords->add($kwd);
+		}
+		else
+		{
+		    $keywords->add($keyword);
+		}
+	    }
+	    $wmssource->setKeywords($keywords);
+	    foreach($wmssource->getLayers() as $layer)
+	    {
+		$keywords = new ArrayCollection();
+		foreach($layer->getKeywords() as $keyword)
+		{
+		    $kwd = $this->getDoctrine()->getRepository("MapbenderCoreBundle:Keyword")->find($keyword->getId());
+		    if($kwd)
+		    {
+			$keywords->add($kwd);
+		    }
+		    else
+		    {
+			$keywords->add($keyword);
+		    }
+		}
+		$layer->setKeywords($keywords);
+	    }
 	    $rootlayer = $wmssource->getLayers()->get(0);
-	    $this->getDoctrine()->getEntityManager()->persist($rootlayer);
-	    $this->saveLayer($this->getDoctrine()->getEntityManager(), $rootlayer);
-	    $this->getDoctrine()->getEntityManager()->persist($wmssource);
-	    $this->getDoctrine()->getEntityManager()->flush();
+
+	    $em->getConnection()->beginTransaction();
+
+	    $em->persist($rootlayer);
+	    $this->saveLayer($em, $rootlayer);
+	    $em->persist($wmssource);
+	    $em->flush();
 
 	    // ACL
 	    $aclProvider = $this->get('security.acl.provider');
@@ -177,6 +210,7 @@ class RepositoryController extends Controller
 	    $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
 	    $aclProvider->updateAcl($acl);
 
+	    $em->getConnection()->commit();
 	    $this->get('session')->setFlash('success', "Your WMS has been created");
 	    return $this->redirect($this->generateUrl(
 			"mapbender_manager_repository_view",

@@ -47,6 +47,21 @@ abstract class Source
     protected $description;
 
     /**
+     * @var array A list of Source keywords
+     * @ORM\ManyToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword", cascade={"persist"})
+     * @ORM\JoinTable(name="mb_core_sources_keywords",
+     *      joinColumns={@ORM\JoinColumn(name="source_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="keyword_id", referencedColumnName="id")}
+     *      )
+     */
+    protected $keywords;
+    
+    public function __construct()
+    {
+	$this->keywords = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer 
@@ -121,6 +136,41 @@ abstract class Source
     {
         return $this->alias;
     }
+    
+    /**
+     * Set keywords
+     *
+     * @param array $keywords
+     * @return Source
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Add keyword
+     *
+     * @param Keyword $keyword
+     * @return Source
+     */
+    public function addKeyword(Keyword $keyword)
+    {
+        $this->keywords->add($keyword);
+        return $this;
+    }
+
 
     /**
      * Get full class name

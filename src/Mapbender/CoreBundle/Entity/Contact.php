@@ -357,5 +357,20 @@ class Contact
     {
         return $this->id;
     }
+    
+    public function setFromContact(Contact $contact){
+	$this->person = $contact->person;
+	$this->position = $contact->position;
+	$this->organization = $contact->organization;
+	$this->voiceTelephone = $contact->voiceTelephone;
+	$this->facsimileTelephone = $contact->facsimileTelephone;
+	$this->electronicMailAddress = $contact->electronicMailAddress;
+	$this->address = $contact->address;
+	$this->addressType = $contact->addressType;
+	$this->addressCity = $contact->addressCity;
+	$this->addressStateOrProvince = $contact->addressStateOrProvince;
+	$this->addressPostCode = $contact->addressPostCode;
+	$this->addressCountry = $contact->addressCountry;
+    }
 
 }

@@ -196,11 +196,7 @@ class WmsSource extends Source
 
     // FIXME: keywords cascade remove RM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist","remove"})
 
-    /**
-     * @var ArrayCollections A list of WMS keywords
-     * @ORM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist"})
-     */
-    protected $keywords;
+    
 
     /**
      * @var ArrayCollections A list of WMS instances
@@ -866,40 +862,7 @@ class WmsSource extends Source
 //        }
     }
 
-    /**
-     * Set keywords
-     *
-     * @param array $keywords
-     * @return Source
-     */
-    public function setKeywords($keywords)
-    {
-        $this->keywords = $keywords;
-        return $this;
-    }
-
-    /**
-     * Get keywords
-     *
-     * @return string 
-     */
-    public function getKeywords()
-    {
-        return $this->keywords;
-    }
-
-    /**
-     * Add keyword
-     *
-     * @param Keyword $keyword
-     * @return Source
-     */
-    public function addKeyword(Keyword $keyword)
-    {
-        $this->keywords->add($keyword);
-        return $this;
-    }
-
+    
     /**
      * Remove layers
      *
@@ -1033,8 +996,53 @@ class WmsSource extends Source
     /**
      * @inheritdoc
      */
-    public function isUpdateable(Source $updatedWmsSource)
+    public function isUpdateable(Source $updatedSource)
     {
+	if($updatedSource->id !== null)
+	    return null;
+	/**
+	 * a source is not updateable if
+	 * - a old layer is in use and is no more exists at updated source (check instances)
+	 * - accessConstraints
+	 * - username or password is/are changed
+	 */
+	/* originUrl,
+	 * name
+	 * version
+	 * onlineResource
+	 * contact
+	 */
+
+	/*
+	 * fees
+	 * accessConstraints
+	 * layerLimit
+	 * maxWidth
+	 * maxHeight
+	 * exceptionFormats
+	 * supportSld
+	 */
+
+	 /* userLayer
+	  * userStyle
+	  * remoteWfs
+	  * inlineFeature
+	  * remoteWcs = false;
+	  */
+
+	/*
+	 * getCapabilities
+	 * getMap
+	 * getFeatureInfo
+	 * describeLayer
+	 * getLegendGraphic
+	 * getStyles
+	 * putStyles
+	 * layers
+	 * keywords remove old
+	 * wmsinstance
+	 */
+
 	// @TODO
 	return false;
     }
@@ -1042,9 +1050,53 @@ class WmsSource extends Source
     /**
      * @inheritdoc
      */
-    public function updateFromSource(Source $updatedWmsSource)
+    public function updateFromSource(Source $updatedSource)
     {
-	
+	if($this->isUpdateable($updatedSource)){
+	    /* overwrite start */
+	    $this->originUrl = $updatedSource->originUrl;
+	    $this->name = $updatedSource->name;
+	    $this->version = $updatedSource->version;
+	    $this->onlineResource = $updatedSource->onlineResource;
+	    if($this->contact !== null)
+	    {
+		$this->contact->setFromContact($updatedSource->contact);
+	    } else {
+		$this->contact = $updatedSource->contact;
+	    }
+	    $this->fees = $updatedSource->fees;
+	    $this->accessConstraints = $updatedSource->accessConstraints;
+	    $this->layerLimit = $updatedSource->layerLimit;
+	    $this->maxWidth = $updatedSource->maxWidth;
+	    $this->maxHeight = $updatedSource->maxHeight;
+	    $this->userLayer = $updatedSource->userLayer;
+	    $this->userStyle = $updatedSource->userStyle;
+	    $this->remoteWfs = $updatedSource->remoteWfs;
+	    $this->inlineFeature = $updatedSource->inlineFeature;
+	    $this->remoteWcs = $updatedSource->remoteWcs;
+	    
+	    $this->getCapabilities = $updatedSource->getCapabilities;
+	    $this->getMap = $updatedSource->getMap;
+	    $this->getFeatureInfo = $updatedSource->getFeatureInfo;
+	    $this->describeLayer = $updatedSource->describeLayer;
+	    $this->getLegendGraphic = $updatedSource->getLegendGraphic;
+	    $this->getStyles = $updatedSource->getStyles;
+	    $this->putStyles = $updatedSource->putStyles;
+	    /* overwrite end */
+	    
+	    if(count($this->keywords->toArray()) > 0){
+		if(count($updatedSource->keywords->toArray()) > 0)
+		{
+		    
+		}
+		else
+		{
+		    
+		}
+	    } else {
+		$this->keywords = $updatedSource->keywords;
+	    }
+	}
     }
 
 }

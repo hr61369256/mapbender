@@ -173,13 +173,23 @@ class WmsLayerSource
      * @ORM\Column(type="array", nullable=true)
      */
     protected $featureListUrl;
-    // FIXME: keywords cascade remove ORM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist","remove"})
+//    // FIXME: keywords cascade remove ORM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist","remove"})
+//    /**
+//     * @var array $keywords the source keyword list
+//     * @ORM\ManyToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist"})
+//     */
+//    protected $keywords;
+
     /**
-     * @var array $keywords the source keyword list
-     * @ORM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist"})
+     * @var array A list of Source keywords
+     * @ORM\ManyToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword", cascade={"persist"})
+     * @ORM\JoinTable(name="mb_wms_wmslayersource_keywords",
+     *      joinColumns={@ORM\JoinColumn(name="wmslayer_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="keyword_id", referencedColumnName="id")}
+     *      )
      */
     protected $keywords;
-
+    
     public function __construct()
     {
         $this->sublayer = new ArrayCollection();
@@ -1071,6 +1081,60 @@ class WmsLayerSource
     public function __toString()
     {
         return (string) $this->id;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function isUpdateable(WmsLayerSource $updatedLayer)
+    {
+	/*
+	 * source
+	 * title
+	 * abstract
+	 */
+
+	/* ???
+	 * parent
+	 * sublayer
+	 * name
+	 * cascaded
+	 * opaque
+	 * noSubset
+	 * fixedWidth
+	 * fixedHeight
+	 * attribution
+	 * identifier
+	 * authority
+	 * featureListUrl
+	 */
+	
+
+	/*
+	 * queryable
+	 * latlonBounds
+	 * boundingBoxes
+	 * srs
+	 * styles
+	 * scale  && scaleHint
+	 * metadataUrl
+	 * dimension
+	 * extent
+	 * dataUrl
+	 * keywords
+	 */
+    }
+    /**
+     * @inheritdoc
+     */
+    public function updateFromSource(WmsLayerSource $updatedLayer)
+    {
+	if($this->isUpdateable($updatedLayer)){
+	    $this->title = $updatedLayer->title;
+	}
+//	$this->originUrl = $updatedWmsSource->originUrl;
+//	$this->name = $updatedWmsSource->name;
+//	$this->version = $updatedWmsSource->version;
+//	$this->onlineResource = $updatedWmsSource->onlineResource;
     }
 
 }

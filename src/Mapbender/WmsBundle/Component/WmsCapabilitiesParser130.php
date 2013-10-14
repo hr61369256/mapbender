@@ -90,13 +90,18 @@ class WmsCapabilitiesParser130
         $keywordElList = $this->xpath->query("./wms:KeywordList/wms:Keyword", $contextElm);
         foreach($keywordElList as $keywordEl)
         {
-            $keyword = new Keyword();
-            $keyword->setValue(trim($this->getValue("./text()", $keywordEl)));
-            $keyword->setSourceclass($wms->getClassname());
-            $keyword->setSourceid($wms);
-
-            // FIXME: breaks sqlite
-            //$wms->addKeyword($keyword);
+	    $keywordStr = trim($this->getValue("./text()", $keywordEl));
+	    if($keywordStr)
+	    {
+		$wms->addKeyword(new Keyword($keywordStr));
+	    }
+//            $keyword = new Keyword();
+//            $keyword->setValue(trim($this->getValue("./text()", $keywordEl)));
+//            $keyword->setSourceclass($wms->getClassname());
+//            $keyword->setSourceid($wms);
+//
+//            // FIXME: breaks sqlite
+//            $wms->addKeyword($keyword);
         }
 
         $wms->setOnlineResource($this->getValue("./wms:OnlineResource/@xlink:href", $contextElm));
@@ -277,13 +282,18 @@ class WmsCapabilitiesParser130
         $keywordElList = $this->xpath->query("./wms:KeywordList/wms:Keyword", $contextElm);
         foreach($keywordElList as $keywordEl)
         {
-            $keyword = new Keyword();
-            $keyword->setValue(trim($this->getValue("./text()", $keywordEl)));
-            $keyword->setSourceclass($wmslayer->getClassname());
-            $keyword->setSourceid($wmslayer);
-
-            // FIXME: breaks sqlite
-            //$wmslayer->addKeyword($keyword);
+	    $keywordStr = trim($this->getValue("./text()", $keywordEl));
+	    if($keywordStr)
+	    {
+		$wmslayer->addKeyword(new Keyword($keywordStr));
+	    }
+//            $keyword = new Keyword();
+//            $keyword->setValue(trim($this->getValue("./text()", $keywordEl)));
+//            $keyword->setSourceclass($wmslayer->getClassname());
+//            $keyword->setSourceid($wmslayer);
+//
+//            // FIXME: breaks sqlite
+//            $wmslayer->addKeyword($keyword);
         }
 
         $tempList = $this->xpath->query("./wms:CRS", $contextElm);

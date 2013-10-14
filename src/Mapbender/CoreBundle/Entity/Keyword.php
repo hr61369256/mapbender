@@ -17,34 +17,34 @@ class Keyword
 {
 
     /**
-     * @var integer $id
+     * @var String $id
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="string", nullable=false)
      */
     protected $id;
+//
+//    /**
+//     * @var string $title The source title
+//     * @ORM\Column(type="string", nullable=false)
+//     */
+//    protected $value;
 
-    /**
-     * @var string $title The source title
-     * @ORM\Column(type="string", nullable=false)
-     */
-    protected $value;
+//    /**
+//     * @var string $title The source title
+//     * @ORM\Column(type="integer", nullable=false)
+//     */
+//    protected $sourceid;
+//
+//    /**
+//     * @var string $title The source title
+//     * @ORM\Column(type="string", nullable=false)
+//     */
+//    protected $sourceclass;
 
-    /**
-     * @var string $title The source title
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    protected $sourceid;
-
-    /**
-     * @var string $title The source title
-     * @ORM\Column(type="string", nullable=false)
-     */
-    protected $sourceclass;
-
-    public function __construct()
+    public function __construct($id = null)
     {
-        
+        if($id)
+	    $this->id = $id;
     }
 
     /**
