@@ -194,10 +194,6 @@ class WmsSource extends Source
      */
     protected $layers;
 
-    // FIXME: keywords cascade remove RM\OneToMany(targetEntity="Mapbender\CoreBundle\Entity\Keyword",mappedBy="id", cascade={"persist","remove"})
-
-    
-
     /**
      * @var ArrayCollections A list of WMS instances
      * @ORM\OneToMany(targetEntity="WmsInstance",mappedBy="source", cascade={"persist","remove"})
@@ -207,19 +203,19 @@ class WmsSource extends Source
 
     public function __construct()
     {
-        $this->keywords = new ArrayCollection();
-        $this->layers = new ArrayCollection();
-        $this->exceptionFormats = array();
+	$this->keywords = new ArrayCollection();
+	$this->layers = new ArrayCollection();
+	$this->exceptionFormats = array();
     }
 
     public function getType()
     {
-        return "WMS";
+	return "WMS";
     }
 
     public function getManagertype()
     {
-        return "wms";
+	return "wms";
     }
 
     /**
@@ -230,8 +226,8 @@ class WmsSource extends Source
      */
     public function setOriginUrl($originUrl)
     {
-        $this->originUrl = $originUrl;
-        return $this;
+	$this->originUrl = $originUrl;
+	return $this;
     }
 
     /**
@@ -241,7 +237,7 @@ class WmsSource extends Source
      */
     public function getOriginUrl()
     {
-        return $this->originUrl;
+	return $this->originUrl;
     }
 
     /**
@@ -252,8 +248,8 @@ class WmsSource extends Source
      */
     public function setName($name)
     {
-        $this->name = $name;
-        return $this;
+	$this->name = $name;
+	return $this;
     }
 
     /**
@@ -263,7 +259,7 @@ class WmsSource extends Source
      */
     public function getName()
     {
-        return $this->name;
+	return $this->name;
     }
 
     /**
@@ -274,8 +270,8 @@ class WmsSource extends Source
      */
     public function setVersion($version)
     {
-        $this->version = $version;
-        return $this;
+	$this->version = $version;
+	return $this;
     }
 
     /**
@@ -285,7 +281,7 @@ class WmsSource extends Source
      */
     public function getVersion()
     {
-        return $this->version;
+	return $this->version;
     }
 
     /**
@@ -296,8 +292,8 @@ class WmsSource extends Source
      */
     public function setOnlineResource($onlineResource)
     {
-        $this->onlineResource = $onlineResource;
-        return $this;
+	$this->onlineResource = $onlineResource;
+	return $this;
     }
 
     /**
@@ -307,7 +303,7 @@ class WmsSource extends Source
      */
     public function getOnlineResource()
     {
-        return $this->onlineResource;
+	return $this->onlineResource;
     }
 
     /**
@@ -318,8 +314,8 @@ class WmsSource extends Source
      */
     public function setContact($contact)
     {
-        $this->contact = $contact;
-        return $this;
+	$this->contact = $contact;
+	return $this;
     }
 
     /**
@@ -329,7 +325,7 @@ class WmsSource extends Source
      */
     public function getContact()
     {
-        return $this->contact;
+	return $this->contact;
     }
 
     /**
@@ -340,8 +336,8 @@ class WmsSource extends Source
      */
     public function setFees($fees)
     {
-        $this->fees = $fees;
-        return $this;
+	$this->fees = $fees;
+	return $this;
     }
 
     /**
@@ -351,7 +347,7 @@ class WmsSource extends Source
      */
     public function getFees()
     {
-        return $this->fees;
+	return $this->fees;
     }
 
     /**
@@ -362,8 +358,8 @@ class WmsSource extends Source
      */
     public function setAccessConstraints($accessConstraints)
     {
-        $this->accessConstraints = $accessConstraints;
-        return $this;
+	$this->accessConstraints = $accessConstraints;
+	return $this;
     }
 
     /**
@@ -373,7 +369,7 @@ class WmsSource extends Source
      */
     public function getAccessConstraints()
     {
-        return $this->accessConstraints;
+	return $this->accessConstraints;
     }
 
     /**
@@ -384,8 +380,8 @@ class WmsSource extends Source
      */
     public function setLayerLimit($layerLimit)
     {
-        $this->layerLimit = $layerLimit;
-        return $this;
+	$this->layerLimit = $layerLimit;
+	return $this;
     }
 
     /**
@@ -395,7 +391,7 @@ class WmsSource extends Source
      */
     public function getLayerLimit()
     {
-        return $this->layerLimit;
+	return $this->layerLimit;
     }
 
     /**
@@ -406,8 +402,8 @@ class WmsSource extends Source
      */
     public function setMaxWidth($maxWidth)
     {
-        $this->maxWidth = $maxWidth;
-        return $this;
+	$this->maxWidth = $maxWidth;
+	return $this;
     }
 
     /**
@@ -417,7 +413,7 @@ class WmsSource extends Source
      */
     public function getMaxWidth()
     {
-        return $this->maxWidth;
+	return $this->maxWidth;
     }
 
     /**
@@ -428,8 +424,8 @@ class WmsSource extends Source
      */
     public function setMaxHeight($maxHeight)
     {
-        $this->maxHeight = $maxHeight;
-        return $this;
+	$this->maxHeight = $maxHeight;
+	return $this;
     }
 
     /**
@@ -439,7 +435,7 @@ class WmsSource extends Source
      */
     public function getMaxHeight()
     {
-        return $this->maxHeight;
+	return $this->maxHeight;
     }
 
     /**
@@ -450,8 +446,8 @@ class WmsSource extends Source
      */
     public function setExceptionFormats($exceptionFormats)
     {
-        $this->exceptionFormats = $exceptionFormats;
-        return $this;
+	$this->exceptionFormats = $exceptionFormats;
+	return $this;
     }
 
     /**
@@ -462,8 +458,8 @@ class WmsSource extends Source
      */
     public function addExceptionFormat($exceptionFormat)
     {
-        $this->exceptionFormats[] = $exceptionFormat;
-        return $this;
+	$this->exceptionFormats[] = $exceptionFormat;
+	return $this;
     }
 
     /**
@@ -473,7 +469,7 @@ class WmsSource extends Source
      */
     public function getExceptionFormats()
     {
-        return $this->exceptionFormats;
+	return $this->exceptionFormats;
     }
 
     /**
@@ -484,8 +480,8 @@ class WmsSource extends Source
      */
     public function setSupportSld($supportSld)
     {
-        $this->supportSld = $supportSld;
-        return $this;
+	$this->supportSld = $supportSld;
+	return $this;
     }
 
     /**
@@ -495,7 +491,7 @@ class WmsSource extends Source
      */
     public function getSupportSld()
     {
-        return $this->supportSld;
+	return $this->supportSld;
     }
 
     /**
@@ -506,8 +502,8 @@ class WmsSource extends Source
      */
     public function setUserLayer($userLayer)
     {
-        $this->userLayer = $userLayer;
-        return $this;
+	$this->userLayer = $userLayer;
+	return $this;
     }
 
     /**
@@ -517,7 +513,7 @@ class WmsSource extends Source
      */
     public function getUserLayer()
     {
-        return $this->userLayer;
+	return $this->userLayer;
     }
 
     /**
@@ -528,8 +524,8 @@ class WmsSource extends Source
      */
     public function setUserStyle($userStyle)
     {
-        $this->userStyle = $userStyle;
-        return $this;
+	$this->userStyle = $userStyle;
+	return $this;
     }
 
     /**
@@ -539,7 +535,7 @@ class WmsSource extends Source
      */
     public function getUserStyle()
     {
-        return $this->userStyle;
+	return $this->userStyle;
     }
 
     /**
@@ -550,8 +546,8 @@ class WmsSource extends Source
      */
     public function setRemoteWfs($remoteWfs)
     {
-        $this->remoteWfs = $remoteWfs;
-        return $this;
+	$this->remoteWfs = $remoteWfs;
+	return $this;
     }
 
     /**
@@ -561,7 +557,7 @@ class WmsSource extends Source
      */
     public function getRemoteWfs()
     {
-        return $this->remoteWfs;
+	return $this->remoteWfs;
     }
 
     /**
@@ -572,8 +568,8 @@ class WmsSource extends Source
      */
     public function setInlineFeature($inlineFeature)
     {
-        $this->inlineFeature = $inlineFeature;
-        return $this;
+	$this->inlineFeature = $inlineFeature;
+	return $this;
     }
 
     /**
@@ -583,7 +579,7 @@ class WmsSource extends Source
      */
     public function getInlineFeature()
     {
-        return $this->inlineFeature;
+	return $this->inlineFeature;
     }
 
     /**
@@ -594,8 +590,8 @@ class WmsSource extends Source
      */
     public function setRemoteWcs($remoteWcs)
     {
-        $this->remoteWcs = $remoteWcs;
-        return $this;
+	$this->remoteWcs = $remoteWcs;
+	return $this;
     }
 
     /**
@@ -605,7 +601,7 @@ class WmsSource extends Source
      */
     public function getRemoteWcs()
     {
-        return $this->remoteWcs;
+	return $this->remoteWcs;
     }
 
     /**
@@ -616,8 +612,8 @@ class WmsSource extends Source
      */
     public function setGetCapabilities(RequestInformation $getCapabilities)
     {
-        $this->getCapabilities = $getCapabilities;
-        return $this;
+	$this->getCapabilities = $getCapabilities;
+	return $this;
     }
 
     /**
@@ -627,7 +623,7 @@ class WmsSource extends Source
      */
     public function getGetCapabilities()
     {
-        return $this->getCapabilities;
+	return $this->getCapabilities;
     }
 
     /**
@@ -638,8 +634,8 @@ class WmsSource extends Source
      */
     public function setGetMap(RequestInformation $getMap)
     {
-        $this->getMap = $getMap;
-        return $this;
+	$this->getMap = $getMap;
+	return $this;
     }
 
     /**
@@ -649,7 +645,7 @@ class WmsSource extends Source
      */
     public function getGetMap()
     {
-        return $this->getMap;
+	return $this->getMap;
     }
 
     /**
@@ -660,8 +656,8 @@ class WmsSource extends Source
      */
     public function setGetFeatureInfo(RequestInformation $getFeatureInfo)
     {
-        $this->getFeatureInfo = $getFeatureInfo;
-        return $this;
+	$this->getFeatureInfo = $getFeatureInfo;
+	return $this;
     }
 
     /**
@@ -671,7 +667,7 @@ class WmsSource extends Source
      */
     public function getGetFeatureInfo()
     {
-        return $this->getFeatureInfo;
+	return $this->getFeatureInfo;
     }
 
     /**
@@ -682,8 +678,8 @@ class WmsSource extends Source
      */
     public function setDescribeLayer(RequestInformation $describeLayer)
     {
-        $this->describeLayer = $describeLayer;
-        return $this;
+	$this->describeLayer = $describeLayer;
+	return $this;
     }
 
     /**
@@ -693,7 +689,7 @@ class WmsSource extends Source
      */
     public function getDescribeLayer()
     {
-        return $this->describeLayer;
+	return $this->describeLayer;
     }
 
     /**
@@ -704,8 +700,8 @@ class WmsSource extends Source
      */
     public function setGetLegendGraphic(RequestInformation $getLegendGraphic)
     {
-        $this->getLegendGraphic = $getLegendGraphic;
-        return $this;
+	$this->getLegendGraphic = $getLegendGraphic;
+	return $this;
     }
 
     /**
@@ -715,7 +711,7 @@ class WmsSource extends Source
      */
     public function getGetLegendGraphic()
     {
-        return $this->getLegendGraphic;
+	return $this->getLegendGraphic;
     }
 
     /**
@@ -726,8 +722,8 @@ class WmsSource extends Source
      */
     public function setGetStyles(RequestInformation $getStyles)
     {
-        $this->getStyles = $getStyles;
-        return $this;
+	$this->getStyles = $getStyles;
+	return $this;
     }
 
     /**
@@ -737,7 +733,7 @@ class WmsSource extends Source
      */
     public function getGetStyles()
     {
-        return $this->getStyles;
+	return $this->getStyles;
     }
 
     /**
@@ -748,8 +744,8 @@ class WmsSource extends Source
      */
     public function setPutStyles(RequestInformation $putStyles)
     {
-        $this->putStyles = $putStyles;
-        return $this;
+	$this->putStyles = $putStyles;
+	return $this;
     }
 
     /**
@@ -759,7 +755,7 @@ class WmsSource extends Source
      */
     public function getPutStyles()
     {
-        return $this->putStyles;
+	return $this->putStyles;
     }
 
     /**
@@ -770,8 +766,8 @@ class WmsSource extends Source
      */
     public function setUsername($username)
     {
-        $this->username = $username;
-        return $this;
+	$this->username = $username;
+	return $this;
     }
 
     /**
@@ -781,7 +777,7 @@ class WmsSource extends Source
      */
     public function getUsername()
     {
-        return $this->username;
+	return $this->username;
     }
 
     /**
@@ -792,8 +788,8 @@ class WmsSource extends Source
      */
     public function setPassword($password)
     {
-        $this->password = $password;
-        return $this;
+	$this->password = $password;
+	return $this;
     }
 
     /**
@@ -803,7 +799,7 @@ class WmsSource extends Source
      */
     public function getPassword()
     {
-        return $this->password;
+	return $this->password;
     }
 
     /**
@@ -814,8 +810,8 @@ class WmsSource extends Source
      */
     public function setLayers($layers)
     {
-        $this->layers = $layers;
-        return $this;
+	$this->layers = $layers;
+	return $this;
     }
 
     /**
@@ -825,7 +821,7 @@ class WmsSource extends Source
      */
     public function getLayers()
     {
-        return $this->layers;
+	return $this->layers;
     }
 
     /**
@@ -836,8 +832,8 @@ class WmsSource extends Source
      */
     public function addLayer(WmsLayerSource $layer)
     {
-        $this->layers->add($layer);
-        return $this;
+	$this->layers->add($layer);
+	return $this;
     }
 
     /**
@@ -847,14 +843,14 @@ class WmsSource extends Source
      */
     public function getRootlayer()
     {
-        foreach($this->layers as $layer)
-        {
-            if($layer->getParent() === null)
-            {
-                return $layer;
-            }
-        }
-        return null;
+	foreach($this->layers as $layer)
+	{
+	    if($layer->getParent() === null)
+	    {
+		return $layer;
+	    }
+	}
+	return null;
 //        if($this->layers !== null && $this->layers->count() > 0){
 //            return $this->layers->get(0);
 //        } else {
@@ -862,7 +858,6 @@ class WmsSource extends Source
 //        }
     }
 
-    
     /**
      * Remove layers
      *
@@ -870,7 +865,7 @@ class WmsSource extends Source
      */
     public function removeLayer(WmsLayerSource $layers)
     {
-        $this->layers->removeElement($layers);
+	$this->layers->removeElement($layers);
     }
 
     /**
@@ -880,12 +875,12 @@ class WmsSource extends Source
      */
     public function removeKeyword(Keyword $keywords)
     {
-        $this->keywords->removeElement($keywords);
+	$this->keywords->removeElement($keywords);
     }
 
     public function __toString()
     {
-        return (string) $this->getId();
+	return (string) $this->getId();
     }
 
     /**
@@ -893,41 +888,41 @@ class WmsSource extends Source
      */
     public function createInstance()
     {
-        $instance = new WmsInstance();
-        $instance->setSource($this);
-        $instance->setTitle($this->getTitle());
-        $formats = $this->getGetMap()->getFormats();
-        $instance->setFormat(count($formats) > 0 ? $formats[0] : null);
-        $infoformats = $this->getGetFeatureInfo() !== null ?
-                $this->getGetFeatureInfo()->getFormats() : array();
-        $instance->setInfoformat(count($infoformats) > 0 ? $infoformats[0] : null);
-        $excformats = $this->getExceptionFormats();
-        $instance->setExceptionformat(count($excformats) > 0 ? $excformats[0] : null);
+	$instance = new WmsInstance();
+	$instance->setSource($this);
+	$instance->setTitle($this->getTitle());
+	$formats = $this->getGetMap()->getFormats();
+	$instance->setFormat(count($formats) > 0 ? $formats[0] : null);
+	$infoformats = $this->getGetFeatureInfo() !== null ?
+	    $this->getGetFeatureInfo()->getFormats() : array();
+	$instance->setInfoformat(count($infoformats) > 0 ? $infoformats[0] : null);
+	$excformats = $this->getExceptionFormats();
+	$instance->setExceptionformat(count($excformats) > 0 ? $excformats[0] : null);
 //        $instance->setOpacity(100);
-        $num = 0;
-        $wmslayer_root = $this->getRootlayer();
-        $instLayer_root = new WmsInstanceLayer();
-        $instLayer_root->setWmsinstance($instance);
-        $instLayer_root->setWmslayersource($wmslayer_root);
-        $instLayer_root->setTitle($wmslayer_root->getTitle());
-        // @TODO min max from scaleHint
-        $instLayer_root->setMinScale(
-                $wmslayer_root->getScaleRecursive() !== null ?
-                        $wmslayer_root->getScaleRecursive()->getMin() : null);
-        $instLayer_root->setMaxScale(
-                $wmslayer_root->getScaleRecursive() !== null ?
-                        $wmslayer_root->getScaleRecursive()->getMax() : null);
-        $queryable = $wmslayer_root->getQueryable();
-        $instLayer_root->setInfo(Utils::getBool($queryable));
-        $instLayer_root->setAllowinfo(Utils::getBool($queryable));
+	$num = 0;
+	$wmslayer_root = $this->getRootlayer();
+	$instLayer_root = new WmsInstanceLayer();
+	$instLayer_root->setWmsinstance($instance);
+	$instLayer_root->setWmslayersource($wmslayer_root);
+	$instLayer_root->setTitle($wmslayer_root->getTitle());
+	// @TODO min max from scaleHint
+	$instLayer_root->setMinScale(
+	    $wmslayer_root->getScaleRecursive() !== null ?
+		$wmslayer_root->getScaleRecursive()->getMin() : null);
+	$instLayer_root->setMaxScale(
+	    $wmslayer_root->getScaleRecursive() !== null ?
+		$wmslayer_root->getScaleRecursive()->getMax() : null);
+	$queryable = $wmslayer_root->getQueryable();
+	$instLayer_root->setInfo(Utils::getBool($queryable));
+	$instLayer_root->setAllowinfo(Utils::getBool($queryable));
 
-        $instLayer_root->setToggle(true);
-        $instLayer_root->setAllowtoggle(true);
-        
-        $instLayer_root->setPriority($num);
-        $instance->addLayer($instLayer_root);
-        $this->addSublayer($instLayer_root, $wmslayer_root, $num, $instance);
-        return $instance;
+	$instLayer_root->setToggle(true);
+	$instLayer_root->setAllowtoggle(true);
+
+	$instLayer_root->setPriority($num);
+	$instance->addLayer($instLayer_root);
+	$this->addSublayer($instLayer_root, $wmslayer_root, $num, $instance);
+	return $instance;
     }
 
     /**
@@ -940,66 +935,67 @@ class WmsSource extends Source
      */
     private function addSublayer($instlayer, $wmslayer, $num, $instance)
     {
-        foreach($wmslayer->getSublayer() as $wmssublayer)
-        {
-            $num++;
-            $instsublayer = new WmsInstanceLayer();
-            $instsublayer->setWmsinstance($instance);
-            $instsublayer->setWmslayersource($wmssublayer);
-            $instsublayer->setTitle($wmssublayer->getTitle());
-            // @TODO min max from scaleHint
-            $instsublayer->setMinScale(
-                    $wmssublayer->getScaleRecursive() !== null ?
-                            $wmssublayer->getScaleRecursive()->getMin() : null);
-            $instsublayer->setMaxScale(
-                    $wmssublayer->getScaleRecursive() !== null ?
-                            $wmssublayer->getScaleRecursive()->getMax() : null);
-            $queryable = $wmssublayer->getQueryable();
-            $instsublayer->setInfo(Utils::getBool($queryable));
-            $instsublayer->setAllowinfo(Utils::getBool($queryable));
+	foreach($wmslayer->getSublayer() as $wmssublayer)
+	{
+	    $num++;
+	    $instsublayer = new WmsInstanceLayer();
+	    $instsublayer->setWmsinstance($instance);
+	    $instsublayer->setWmslayersource($wmssublayer);
+	    $instsublayer->setTitle($wmssublayer->getTitle());
+	    // @TODO min max from scaleHint
+	    $instsublayer->setMinScale(
+		$wmssublayer->getScaleRecursive() !== null ?
+		    $wmssublayer->getScaleRecursive()->getMin() : null);
+	    $instsublayer->setMaxScale(
+		$wmssublayer->getScaleRecursive() !== null ?
+		    $wmssublayer->getScaleRecursive()->getMax() : null);
+	    $queryable = $wmssublayer->getQueryable();
+	    $instsublayer->setInfo(Utils::getBool($queryable));
+	    $instsublayer->setAllowinfo(Utils::getBool($queryable));
 
-            $instsublayer->setPriority($num);
-            $instsublayer->setParent($instlayer);
-            $instance->addLayer($instsublayer);
-            if($wmssublayer->getSublayer()->count() > 0){
-                $instsublayer->setToggle(true);
-                $instsublayer->setAllowtoggle(true);
-            }
-            $this->addSublayer($instsublayer, $wmssublayer, $num, $instance);
-        }
+	    $instsublayer->setPriority($num);
+	    $instsublayer->setParent($instlayer);
+	    $instance->addLayer($instsublayer);
+	    if($wmssublayer->getSublayer()->count() > 0)
+	    {
+		$instsublayer->setToggle(true);
+		$instsublayer->setAllowtoggle(true);
+	    }
+	    $this->addSublayer($instsublayer, $wmssublayer, $num, $instance);
+	}
     }
-    
+
     /**
      * @inheritdoc
      */
     public function remove(EntityManager $em)
     {
-        $this->removeSourceRecursive($em, $this->getRootlayer());
-        $em->remove($this);
+	$this->removeSourceRecursive($em, $this->getRootlayer());
+	$em->remove($this);
     }
-    
+
     /**
      * Recursively remove a nested Layerstructure
      * @param WmsLayerSource
      * @param EntityManager
      */
-    private function removeSourceRecursive(EntityManager $em, WmsLayerSource $wmslayer)
+    private function removeSourceRecursive(EntityManager $em,
+	WmsLayerSource $wmslayer)
     {
-        foreach($wmslayer->getSublayer() as $sublayer)
-        {
-            $this->removeSourceRecursive($em, $sublayer);
-        }
-        $em->remove($wmslayer);
-        $em->flush();
+	foreach($wmslayer->getSublayer() as $sublayer)
+	{
+	    $this->removeSourceRecursive($em, $sublayer);
+	}
+	$em->remove($wmslayer);
+	$em->flush();
     }
-    
+
     /**
      * @inheritdoc
      */
     public function isUpdateable(Source $updatedSource)
     {
-	if($updatedSource->id !== null)
-	    return null;
+	if($updatedSource->id !== null) return null;
 	/**
 	 * a source is not updateable if
 	 * - a old layer is in use and is no more exists at updated source (check instances)
@@ -1023,12 +1019,12 @@ class WmsSource extends Source
 	 * supportSld
 	 */
 
-	 /* userLayer
-	  * userStyle
-	  * remoteWfs
-	  * inlineFeature
-	  * remoteWcs = false;
-	  */
+	/* userLayer
+	 * userStyle
+	 * remoteWfs
+	 * inlineFeature
+	 * remoteWcs = false;
+	 */
 
 	/*
 	 * getCapabilities
@@ -1046,13 +1042,14 @@ class WmsSource extends Source
 	// @TODO
 	return false;
     }
-    
+
     /**
      * @inheritdoc
      */
     public function updateFromSource(Source $updatedSource)
     {
-	if($this->isUpdateable($updatedSource)){
+	if($this->isUpdateable($updatedSource))
+	{
 	    /* overwrite start */
 	    $this->originUrl = $updatedSource->originUrl;
 	    $this->name = $updatedSource->name;
@@ -1061,7 +1058,9 @@ class WmsSource extends Source
 	    if($this->contact !== null)
 	    {
 		$this->contact->setFromContact($updatedSource->contact);
-	    } else {
+	    }
+	    else
+	    {
 		$this->contact = $updatedSource->contact;
 	    }
 	    $this->fees = $updatedSource->fees;
@@ -1074,7 +1073,7 @@ class WmsSource extends Source
 	    $this->remoteWfs = $updatedSource->remoteWfs;
 	    $this->inlineFeature = $updatedSource->inlineFeature;
 	    $this->remoteWcs = $updatedSource->remoteWcs;
-	    
+
 	    $this->getCapabilities = $updatedSource->getCapabilities;
 	    $this->getMap = $updatedSource->getMap;
 	    $this->getFeatureInfo = $updatedSource->getFeatureInfo;
@@ -1083,18 +1082,76 @@ class WmsSource extends Source
 	    $this->getStyles = $updatedSource->getStyles;
 	    $this->putStyles = $updatedSource->putStyles;
 	    /* overwrite end */
-	    
-	    if(count($this->keywords->toArray()) > 0){
-		if(count($updatedSource->keywords->toArray()) > 0)
+
+//	    if(count($this->keywords->toArray()) > 0){
+//		if(count($updatedSource->keywords->toArray()) > 0)
+//		{
+//		    
+//		}
+//		else
+//		{
+//		    
+//		}
+//	    } else {
+//		$this->keywords = $updatedSource->keywords;
+//	    }
+	    foreach($this->wmsinstance as $instance)
+	    {
+//		$instance = new WmsInstance();
+//		$instance->setSource($this);
+		$instance->setTitle($this->getTitle());
+		$formats = $this->getGetMap()->getFormats();
+		if(count($formats) === 0)
 		{
-		    
+		    $instance->setFormat(null);
 		}
-		else
+		else if(!key_exists($instance->getFormat(), $formats))
 		{
-		    
+		    $instance->setFormat($formats[0]);
 		}
-	    } else {
-		$this->keywords = $updatedSource->keywords;
+		$infoformats = $this->getGetFeatureInfo() !== null ?
+		    $this->getGetFeatureInfo()->getFormats() : array();
+		if(count($infoformats) === 0)
+		{
+		    $instance->setInfoformat(null);
+		}
+		else if(!key_exists($instance->getInfoformat(), $infoformats))
+		{
+		    $instance->setFormat($formats[0]);
+		}
+		$excformats = $this->getExceptionFormats();
+		if(count($excformats) === 0)
+		{
+		    $instance->setExceptionformat(null);
+		}
+		else if(!key_exists($instance->getExceptionformat(), $excformats))
+		{
+		    $instance->setExceptionformat($excformats[0]);
+		}
+//		$num = 0;
+//		$wmslayer_root = $this->getRootlayer();
+//		$instLayer_root = new WmsInstanceLayer();
+//		$instLayer_root->setWmsinstance($instance);
+//		$instLayer_root->setWmslayersource($wmslayer_root);
+//		$instLayer_root->setTitle($wmslayer_root->getTitle());
+//		// @TODO min max from scaleHint
+//		$instLayer_root->setMinScale(
+//		    $wmslayer_root->getScaleRecursive() !== null ?
+//			$wmslayer_root->getScaleRecursive()->getMin() : null);
+//		$instLayer_root->setMaxScale(
+//		    $wmslayer_root->getScaleRecursive() !== null ?
+//			$wmslayer_root->getScaleRecursive()->getMax() : null);
+//		$queryable = $wmslayer_root->getQueryable();
+//		$instLayer_root->setInfo(Utils::getBool($queryable));
+//		$instLayer_root->setAllowinfo(Utils::getBool($queryable));
+//
+//		$instLayer_root->setToggle(true);
+//		$instLayer_root->setAllowtoggle(true);
+//
+//		$instLayer_root->setPriority($num);
+//		$instance->addLayer($instLayer_root);
+//		$this->addSublayer($instLayer_root, $wmslayer_root, $num, $instance);
+//		return $instance;
 	    }
 	}
     }
