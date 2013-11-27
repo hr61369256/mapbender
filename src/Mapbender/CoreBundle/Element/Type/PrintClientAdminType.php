@@ -5,10 +5,10 @@ namespace Mapbender\CoreBundle\Element\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Mapbender\CoreBundle\Form\EventListener\PrintClientSubscriber;
+
 
 /**
- * 
+ *
  */
 class PrintClientAdminType extends AbstractType
 {
@@ -36,23 +36,31 @@ class PrintClientAdminType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $subscriber = new PrintClientSubscriber($builder->getFormFactory(), $options["application"]);
-        $builder->addEventSubscriber($subscriber);
-        $builder->add('target', 'target_element',
-                      array(
+        $builder->add('target', 'target_element', array(
                     'element_class' => 'Mapbender\\CoreBundle\\Element\\Map',
                     'application' => $options['application'],
                     'property_path' => '[target]',
                     'required' => false))
-                ->add('autoOpen', 'checkbox',
-                      array(
+                ->add('autoOpen', 'checkbox', array(
                     'required' => false))
-                ->add('scales', 'text', array('required' => false))
-                ->add('file_prefix', 'text', array('required' => false))
-                ->add('rotatable', 'checkbox',
-                      array(
+                ->add('scales', 'collection', array(
+                    'type' => 'text',
+                    'allow_add' => true,
+                    'allow_delete' => true,
                     'required' => false))
-                ->add('optional_fields', 'text', array('required' => false));
+                ->add('file_prefix', 'text', array(
+                    'required' => false))
+                ->add('rotatable', 'checkbox', array(
+                    'required' => false))
+                ->add('templates', 'collection', array(
+                    'type' => new PrintClientTemplateAdminType(),
+                    'allow_add' => true,
+                    'allow_delete' => true
+                  ))
+                ->add('templates', 'collection', array(
+                    'type' => new PrintClientQualityAdminType(),
+                    'allow_add' => true,
+                    'allow_delete' => true
+                  ));
     }
-
 }

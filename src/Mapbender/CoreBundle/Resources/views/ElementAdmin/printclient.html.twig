@@ -7,30 +7,15 @@
     <div class="clearContainer"></div>
     {{ form_label(form.configuration.target) }}{{ form_widget(form.configuration.target) }}
     <div class="clearContainer"></div>
+
     {{ form_label(form.configuration.scales) }}{{ form_widget(form.configuration.scales) }}
     <div class="clearContainer"></div>
+
     {{ form_widget(form.configuration.rotatable) }}<label for="{{form.configuration.rotatable.vars.id}}" class="labelCheck">{{"Rotatable"|trans}}</label>
     <div class="clearContainer"></div>
     {{ form_label(form.configuration.file_prefix) }}{{ form_widget(form.configuration.file_prefix) }}
     <div class="clearContainer"></div>
-    {{ form_label(form.configuration.quality_levels) }}
-    {% for level in form.configuration.quality_levels %}
-        <div class="singleRow">
-            {{form_label(level.dpi)}}
-            {{ form_widget(level.dpi) }}
-            {{form_label(level.label)}}
-            {{ form_widget(level.label) }}
-        </div>
-        <div class="clearContainer"></div>
-        <span class="labelInput"></span>
-    {% endfor %}
+
+    {{ form_label(form.configuration.templates) }}{{ form_widget(form.configuration.templates) }}
     <div class="clearContainer"></div>
-    {% for template in form.configuration.templates %}
-        {{form_label(template.template)}}   {{ form_widget(template.template) }}
-        <div class="clearContainer"></div>
-        {{form_label(template.label)}}   {{ form_widget(template.label) }}
-        <div class="clearContainer"></div>
-        {{form_label(template.format)}}   {{ form_widget(template.format) }}
-        <div class="clearContainer"></div>
-    {% endfor %}
 </div>
