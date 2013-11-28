@@ -288,10 +288,10 @@ $.widget('mapbender.mbSearchRouter', {
         var headers = this.options.routes[this.selected].results.headers;
 
         var table = $('<table></table>'),
-            thead = $('<thead><tr></tr></thead>').appendTo(table);
+            thead = $('<thead></thead>').appendTo(table);
 
         for(var header in headers) {
-            thead.append($('<th>' + headers[header] + '</th>'));
+            thead.append($('<th class="col' + headers[header] + '">' + headers[header] + '</th>'));
         }
 
         table.append($('<tbody></tbody>'));
