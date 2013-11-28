@@ -47,6 +47,7 @@ class PrintClientAdminType extends AbstractType
                     'type' => 'text',
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'attr' => array('class' => 'elementPrintClientScales'),
                     'required' => false))
                 ->add('file_prefix', 'text', array(
                     'required' => false))
@@ -55,12 +56,14 @@ class PrintClientAdminType extends AbstractType
                 ->add('templates', 'collection', array(
                     'type' => new PrintClientTemplateAdminType(),
                     'allow_add' => true,
-                    'allow_delete' => true
+                    'allow_delete' => true,
+                    'attr' => array('class' => 'elementPrintClientTemplates')
                   ))
-                ->add('templates', 'collection', array(
+                ->add('quality_levels', 'collection', array(
                     'type' => new PrintClientQualityAdminType(),
                     'allow_add' => true,
-                    'allow_delete' => true
+                    'allow_delete' => true,
+                    'attr' => array('class' => 'elementPrintClientQuality')
                   ));
     }
 }
