@@ -102,6 +102,11 @@ class Application
      * @ORM\Column(type="array", nullable=true)
      */
     protected $extra_assets;
+    
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $extra_css;
 
     /**
      * @Assert\File(maxSize="102400")
@@ -366,6 +371,27 @@ class Application
     public function getExtraAssets()
     {
         return $this->extra_assets;
+    }
+
+    /**
+     * Set extra css
+     *
+     * @param string $extra_css
+     */
+    public function setExtraCss($extra_css)
+    {
+        $this->extra_css = $extra_css;
+        return $this;
+    }
+
+    /**
+     * Get extra css
+     *
+     * @return string extra css
+     */
+    public function getExtraCss()
+    {
+        return $this->extra_css;
     }
 
     /**

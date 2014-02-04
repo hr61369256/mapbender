@@ -17,6 +17,7 @@
         <li id="tabLayout" class="tab">{{"mb.manager.admin.application.layouts" | trans }}</li>
         <li id="tabLayers" class="tab">{{"mb.manager.admin.application.layersets" | trans }}</li>
         <li id="tabSecurity" class="tab">{{"mb.manager.admin.application.security" | trans }}</li>
+        <li id="tabCsseditor" class="tab">{{"mb.manager.admin.application.csseditor" | trans }}</li>
       </ul>
       <div id="containerBaseData" class="container active containerBaseData">
         {% include 'MapbenderManagerBundle:Application:form-basic.html.twig' %}
@@ -29,6 +30,9 @@
       </div>
       <div id="containerSecurity" class="container containerSecurity">
         {% include 'MapbenderManagerBundle:Application:form-security.html.twig' %}
+      </div>
+      <div id="containerCsseditor" class="container containerCsseditor">
+        {% include 'MapbenderManagerBundle:Application:form-csseditor.html.twig' %}
       </div>
     </div>
 

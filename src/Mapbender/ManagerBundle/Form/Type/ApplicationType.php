@@ -4,7 +4,6 @@ namespace Mapbender\ManagerBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Mapbender\ManagerBundle\Form\EventListener\RegionSubscriber;
 
 class ApplicationType extends AbstractType
 {
@@ -24,9 +23,6 @@ class ApplicationType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-//        $subscriber = new RegionSubscriber($builder->getFormFactory(), $options);
-//        $builder->addEventSubscriber($subscriber);
         $builder
             // Base data
             ->add('title', 'text',
@@ -72,6 +68,11 @@ class ApplicationType extends AbstractType
             'property_path' => false,
             'data' => $options['data'],
             'permissions' => 'standard::object'));
+        // CssEditor
+        $builder->add('extra_css', 'textarea',
+                array(
+                'required' => false,
+                'label' => 'CssEditor'));
     }
 
 }
