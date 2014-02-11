@@ -3,7 +3,7 @@ Mapbender.WmcHandler = function(mapWidget, options){
     if(!options)
         options = {};
     this.mapWidget = mapWidget;
-    this.options = $.extend({}, options, {keepSources: 'no', keepExtent: false});
+    this.options = $.extend({}, {keepSources: 'no', keepExtent: false}, options);
 
     this.loadFromId = function(url, id){
         $.ajax({
@@ -51,7 +51,7 @@ Mapbender.WmcHandler = function(mapWidget, options){
             }
         }
         if(wmcProj === null){
-            Mapbender.error('SRS "' + state.extent.srs + '" is not supported by this application.');
+            Mapbender.error(Mapbender.trans(Mapbender.trans("mb.wmc.element.wmchandler.error_srs", {"srs": state.extent.srs})));
         }else if(wmcProj.projCode === mapProj.projCode){
             if(!this.options.keepExtent){
                 var boundsAr = [state.extent.minx, state.extent.miny, state.extent.maxx, state.extent.maxy];
@@ -68,6 +68,28 @@ Mapbender.WmcHandler = function(mapWidget, options){
             this.mapWidget.removeSources(toKeepSources);
             this._addWmcToMap(state.sources);
         }
+    };
+    
+    this.removeFromMap = function(){
+        var model = this.mapWidget.getModel(),
+                toKeepSources = {};
+        if(this.options.keepSources === 'basesources'){
+            for(var i = 0; i < model.sourceTree.length; i++){
+                var source = model.sourceTree[i];
+                if(source.configuration.isBaseSource)
+                    toKeepSources[source.id] = {sourceId: source.id};
+            }
+        } else if(this.options.keepSources === 'allsources'){
+            for(var i = 0; i < model.sourceTree.length; i++){
+                var source = model.sourceTree[i];
+                toKeepSources[source.id] = {sourceId: source.id};
+            }
+        }
+        this.mapWidget.removeSources(toKeepSources);
+    };
+    
+    this._addWmcToMap = function(sources){
+        
     };
 
     this._addWmcToMap = function(sources){

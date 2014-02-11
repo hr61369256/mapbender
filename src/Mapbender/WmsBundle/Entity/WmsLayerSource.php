@@ -1,5 +1,4 @@
 <?php
-
 namespace Mapbender\WmsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,7 +24,6 @@ use Mapbender\CoreBundle\Component\Utils;
  */
 class WmsLayerSource
 {
-
     /**
      * @var integer $id
      * @ORM\Id
@@ -519,11 +517,9 @@ class WmsLayerSource
     public function getLatlonBounds()
     {
 //        //@TODO check layer inheritance if layer->latlonBounds === null
-        if($this->latlonBounds === null && $this->getParent() !== null)
-        {
+        if ($this->latlonBounds === null && $this->getParent() !== null) {
             return $this->getParent()->getLatlonBounds();
-        } else
-        {
+        } else {
             return $this->latlonBounds;
         }
 //        return $this->latlonBounds;
@@ -602,12 +598,10 @@ class WmsLayerSource
     public function getSrs()
     {
 //        return $this->srs;
-        if($this->getParent() !== null)
-        { // add crses from parent
+        if ($this->getParent() !== null) { // add crses from parent
             return array_merge(
-                            $this->getParent()->getSrs(), $this->srs);
-        } else
-        {
+                $this->getParent()->getSrs(), $this->srs);
+        } else {
             return $this->srs;
         }
     }
@@ -644,12 +638,10 @@ class WmsLayerSource
      */
     public function getStyles()
     {
-        if($this->getParent() !== null)
-        { // add styles from parent
+        if ($this->getParent() !== null) { // add styles from parent
             return array_merge(
-                            $this->getParent()->getStyles(), $this->styles);
-        } else
-        {
+                $this->getParent()->getStyles(), $this->styles);
+        } else {
             return $this->styles;
         }
     }
@@ -675,7 +667,7 @@ class WmsLayerSource
     {
         return $this->scale;
     }
-    
+
     /**
      * Get scale
      *
@@ -683,7 +675,7 @@ class WmsLayerSource
      */
     public function getScaleRecursive()
     {
-        if($this->scale === null && $this->getParent() !== null){
+        if ($this->scale === null && $this->getParent() !== null) {
             return $this->getParent()->getScale();
         } else {
             return $this->scale;
@@ -777,14 +769,10 @@ class WmsLayerSource
     {
         $result = array();
         $authorities = $this->getAuthority();
-        if(count($this->identifier) != 0 && count($authorities) != 0)
-        {
-            foreach($this->identifier as $identifier)
-            {
-                foreach($authorities as $authority)
-                {
-                    if($authority->getName() == $identifier->getAuthority())
-                    {
+        if (count($this->identifier) != 0 && count($authorities) != 0) {
+            foreach ($this->identifier as $identifier) {
+                foreach ($authorities as $authority) {
+                    if ($authority->getName() == $identifier->getAuthority()) {
                         $ident_auth = new IdentifierAuthority();
                         $ident_auth->setAuthority($authority);
                         $ident_auth->setIdentifier($identifier);
@@ -827,12 +815,10 @@ class WmsLayerSource
      */
     public function getAuthority()
     {
-        if($this->getParent() !== null)
-        { // add crses from parent
+        if ($this->getParent() !== null) { // add crses from parent
             return array_merge(
-                            $this->getParent()->getAuthority(), $this->authority);
-        } else
-        {
+                $this->getParent()->getAuthority(), $this->authority);
+        } else {
             $this->authority;
         }
     }
