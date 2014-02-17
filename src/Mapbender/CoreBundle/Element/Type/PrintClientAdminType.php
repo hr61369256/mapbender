@@ -56,13 +56,15 @@ class PrintClientAdminType extends AbstractType
                     'type' => new PrintClientTemplateAdminType(),
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'attr' => array('class' => 'elementPrintClientTemplates')
+                    'attr' => array(
+                        'class' => 'elementPrintClientTemplates collectionItemLevel1')
                   ))
                 ->add('quality_levels', 'collection', array(
                     'type' => new PrintClientQualityAdminType(),
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'attr' => array('class' => 'elementPrintClientQuality')
+                    'attr' => array(
+                        'class' => 'elementPrintClientQuality')
                   ));
     }
 }

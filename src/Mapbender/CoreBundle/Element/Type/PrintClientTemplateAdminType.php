@@ -41,6 +41,8 @@ class PrintClientTemplateAdminType extends AbstractType
                     'type' => new PrintClientOptionalFieldAdminType(),
                     'required' => false,
                     'allow_add' => true,
-                    'allow_delete' => true));
+                    'allow_delete' => true,
+                    'attr' => array(
+                        'class' => 'collectionItemLevel2')));
     }
 }
