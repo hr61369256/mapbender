@@ -3,18 +3,26 @@ $.extend(true, Mapbender, {
     source: {
         'wms': {
             create: function(layerDef){
+                var self = this;
                 var rootLayer = layerDef.configuration.children[0];
 
-                function _setId(layer, parent, id, num){
+                function _setProperties(layer, parent, id, num, proxy){
                     /* set unic id for a layer */
                     layer.options.id = parent ? parent.options.id + "_" + num : id + "_" + num;
+                    if(proxy && layer.options.legend){
+                        if(layer.options.legend.graphic){
+                            layer.options.legend.graphic = self._addProxy(layer.options.legend.graphic);
+                        } else if(layer.options.legend.url){
+                            layer.options.legend.url = self._addProxy(layer.options.legend.url);
+                        }
+                    }
                     if(layer.children){
                         for(var i = 0; i < layer.children.length; i++){
-                            _setId(layer.children[i], layer, id, i);
+                            _setProperties(layer.children[i], layer, id, i, proxy);
                         }
                     }
                 }
-                _setId(rootLayer, null, layerDef.id, 0);
+                _setProperties(rootLayer, null, layerDef.id, 0, layerDef.configuration.options.proxy);
 
                 var finalUrl = layerDef.configuration.options.url;
 
@@ -106,24 +114,28 @@ $.extend(true, Mapbender, {
 
                 requestUrl += (/\?/.test(layer.options.url) ? '&' : '?') + params;
 
-                $.ajax({
+                var proxy = layer.source.configuration.options.proxy;
+
+                var request = $.ajax({
                     url: Mapbender.configuration.application.urls.proxy,
                     contentType: contentType_,
                     data: {
-                        url: encodeURIComponent(requestUrl)
-                    },
-                    success: function(data){
-                        callback({
-                            layerId: layer.id,
-                            response: data
-                        });
-                    },
-                    error: function(error){
-                        callback({
-                            layerId: layer.id,
-                            response: 'ERROR'
-                        });
+                        url: proxy ? requestUrl : encodeURIComponent(requestUrl)
                     }
+                });
+
+                request.done(function(data, textStatus, jqXHR) {
+                    callback({
+                        layerId: layer.id,
+                        response: data
+                    }, jqXHR);
+                });
+
+                request.fail(function(jqXHR, textStatus, errorThrown) {
+                    callback({
+                        layerId: layer.id,
+                        response: textStatus
+                    }, jqXHR);
                 });
             },
             loadFromUrl: function(url){
@@ -291,11 +303,12 @@ $.extend(true, Mapbender, {
                     return null;
                 }
             },
-            getPrintConfig: function(layer, bounds){
-                return {
+            getPrintConfig: function(layer, bounds, isProxy){
+                var printConfig =  {
                     type: 'wms',
-                    url: layer.getURL(bounds)
+                    url: isProxy ? this._removeProxy(layer.getURL(bounds)) : layer.getURL(bounds)
                 };
+                return printConfig;
             },
             onLoadError: function(imgEl, sourceId, projection, callback){
                 var self = this;
@@ -635,7 +648,7 @@ $.extend(true, Mapbender, {
                     }
                     if(!layer.state.outOfScale){
                         if(layer.options.maxScale){
-                            if(layer.options.maxScale >= scale){
+                            if(layer.options.maxScale > scale){
                                 layer.state.outOfScale = false;
                             }else{
                                 layer.state.outOfScale = true;
@@ -710,7 +723,7 @@ $.extend(true, Mapbender, {
              * @param {object} source source
              * @param {object} changeOptions options in form of:
              * {layers:{'LAYERNAME': {options:{treeOptions:{selected: bool,info: bool}}}}}
-             * @param {boolean} merge 
+             * @param {boolean} merge
              * @returns {object} changes
              */
             createOptionsLayerState: function(source, changeOptions, selectedOther, merge){
