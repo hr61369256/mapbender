@@ -1,4 +1,5 @@
 <?php
+
 namespace Mapbender\WmsBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -187,7 +188,7 @@ class WmsLayerSource
      *      )
      */
     protected $keywords;
-    
+
     public function __construct()
     {
         $this->sublayer = new ArrayCollection();
@@ -1068,55 +1069,57 @@ class WmsLayerSource
     {
         return (string) $this->id;
     }
+
     /**
      * @inheritdoc
      */
     public function isUpdateable(WmsLayerSource $updatedLayer)
     {
-	/*
-	 * source
-	 * title
-	 * abstract
-	 */
+        /*
+         * source
+         * title
+         * abstract
+         */
 
-	/* ???
-	 * parent
-	 * sublayer
-	 * name
-	 * cascaded
-	 * opaque
-	 * noSubset
-	 * fixedWidth
-	 * fixedHeight
-	 * attribution
-	 * identifier
-	 * authority
-	 * featureListUrl
-	 */
-	
+        /* ???
+         * parent
+         * sublayer
+         * name
+         * cascaded
+         * opaque
+         * noSubset
+         * fixedWidth
+         * fixedHeight
+         * attribution
+         * identifier
+         * authority
+         * featureListUrl
+         */
 
-	/*
-	 * queryable
-	 * latlonBounds
-	 * boundingBoxes
-	 * srs
-	 * styles
-	 * scale  && scaleHint
-	 * metadataUrl
-	 * dimension
-	 * extent
-	 * dataUrl
-	 * keywords
-	 */
+
+        /*
+         * queryable
+         * latlonBounds
+         * boundingBoxes
+         * srs
+         * styles
+         * scale  && scaleHint
+         * metadataUrl
+         * dimension
+         * extent
+         * dataUrl
+         * keywords
+         */
     }
+
     /**
      * @inheritdoc
      */
     public function updateFromSource(WmsLayerSource $updatedLayer)
     {
-	if($this->isUpdateable($updatedLayer)){
-	    $this->title = $updatedLayer->title;
-	}
+        if ($this->isUpdateable($updatedLayer)) {
+            $this->title = $updatedLayer->title;
+        }
 //	$this->originUrl = $updatedWmsSource->originUrl;
 //	$this->name = $updatedWmsSource->name;
 //	$this->version = $updatedWmsSource->version;
