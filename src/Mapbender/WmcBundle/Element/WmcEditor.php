@@ -165,7 +165,7 @@ class WmcEditor extends Element
             ->find($wmcid);
         $oldenabled = $wmc->getPublic() ? "enabled" : "disabled";
         $wmc->setPublic($enabled === "enabled" ? true : false);
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $em->persist($wmc);
         $em->flush();
         return new Response(json_encode(array(
@@ -300,7 +300,7 @@ class WmcEditor extends Element
                     }
                 }
                 $wmc->setState($wmchandler->unSignUrls($wmc->getState()));
-                $em = $this->container->get('doctrine')->getEntityManager();
+                $em = $this->container->get('doctrine')->getManager();
                 $em->getConnection()->beginTransaction();
                 $em->persist($wmc);
                 $em->flush();
@@ -398,7 +398,7 @@ class WmcEditor extends Element
                     $this->container);
                 $wmcid = $wmc->getId();
                 $wmc = $wmchandler->getWmc($wmcid, false);
-                $em = $this->container->get('doctrine')->getEntityManager();
+                $em = $this->container->get('doctrine')->getManager();
                 $em->getConnection()->beginTransaction();
                 if ($wmc->getScreenshotPath() !== null) {
                     $filepath = $wmchandler->getWmcDir() . '/' . $wmc->getScreenshotPath();
@@ -436,7 +436,7 @@ class WmcEditor extends Element
     {
         $config = $this->getConfiguration();
         foreach ($config['accessGroups'] as $groupId) {
-            $groupObj = $this->container->get('doctrine')->getEntityManager()
+            $groupObj = $this->container->get('doctrine')->getManager()
                     ->getRepository('FOMUserBundle:Group')->findOneBy(array(
                 'id' => $groupId));
             $a = $groupObj->getAsRole();
