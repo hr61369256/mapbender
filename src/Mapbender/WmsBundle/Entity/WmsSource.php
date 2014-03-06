@@ -642,7 +642,7 @@ class WmsSource extends Source
     /**
      * Get getMap
      *
-     * @return Object 
+     * @return RequestInformation 
      */
     public function getGetMap()
     {
@@ -984,107 +984,177 @@ class WmsSource extends Source
         $em->remove($wmslayer);
         $em->flush();
     }
+//
+//    /**
+//     * @inheritdoc
+//     */
+//    public function isUpdateable(Source $updatedSource)
+//    {
+//        if ($this->wmsinstance->count() === 0) {
+//            return true;
+//        }
+//        if ($updatedSource->id !== null) {
+//            foreach ($this->wmsinstance as $wmsinstance) {
+//                
+//            }
+//        }
+//        /**
+//         * a source is not updateable if
+//         * - a old layer is in use and is no more exists at the updated source (check instances)
+//         * - accessConstraints
+//         * - username or password is/are changed
+//         */
+//        /* originUrl,
+//         * name
+//         * version
+//         * onlineResource
+//         * contact
+//         */
+//
+//        /*
+//         * fees
+//         * accessConstraints
+//         * layerLimit
+//         * maxWidth
+//         * maxHeight
+//         * exceptionFormats
+//         * supportSld
+//         */
+//
+//        /* userLayer
+//         * userStyle
+//         * remoteWfs
+//         * inlineFeature
+//         * remoteWcs = false;
+//         */
+//
+//        /*
+//         * getCapabilities
+//         * getMap
+//         * getFeatureInfo
+//         * describeLayer
+//         * getLegendGraphic
+//         * getStyles
+//         * putStyles
+//         * layers
+//         * keywords remove old
+//         * wmsinstance
+//         */
+//
+//        // @TODO
+//        return false;
+//    }
 
     /**
      * @inheritdoc
      */
-    public function isUpdateable(Source $updatedSource)
+    public function update(Source $updated)
     {
-        if ($updatedSource->id !== null)
-            return null;
-        /**
-         * a source is not updateable if
-         * - a old layer is in use and is no more exists at updated source (check instances)
-         * - accessConstraints
-         * - username or password is/are changed
-         */
-        /* originUrl,
-         * name
-         * version
-         * onlineResource
-         * contact
-         */
-
-        /*
-         * fees
-         * accessConstraints
-         * layerLimit
-         * maxWidth
-         * maxHeight
-         * exceptionFormats
-         * supportSld
-         */
-
-        /* userLayer
-         * userStyle
-         * remoteWfs
-         * inlineFeature
-         * remoteWcs = false;
-         */
-
-        /*
-         * getCapabilities
-         * getMap
-         * getFeatureInfo
-         * describeLayer
-         * getLegendGraphic
-         * getStyles
-         * putStyles
-         * layers
-         * keywords remove old
-         * wmsinstance
-         */
-
-        // @TODO
-        return false;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function updateFromSource(Source $updatedSource)
-    {
-        if ($this->isUpdateable($updatedSource)) {
+        foreach ($this->wmsinstance as $wmsinstance) {
+            $new_wmsinstance = $updated->createInstance();
+        }
+//        if ($this->isUpdateable($updatedSource)) {
             /* overwrite start */
-            $this->originUrl = $updatedSource->originUrl;
-            $this->name = $updatedSource->name;
-            $this->version = $updatedSource->version;
-            $this->onlineResource = $updatedSource->onlineResource;
+            $this->originUrl = $updated->originUrl;
+            $this->name = $updated->name;
+            $this->version = $updated->version;
+            $this->onlineResource = $updated->onlineResource;
             if ($this->contact !== null) {
-                $this->contact->setFromContact($updatedSource->contact);
+                $this->contact->setFromContact($updated->contact);
             } else {
-                $this->contact = $updatedSource->contact;
+                $this->contact = $updated->contact;
             }
-            $this->fees = $updatedSource->fees;
-            $this->accessConstraints = $updatedSource->accessConstraints;
-            $this->layerLimit = $updatedSource->layerLimit;
-            $this->maxWidth = $updatedSource->maxWidth;
-            $this->maxHeight = $updatedSource->maxHeight;
-            $this->userLayer = $updatedSource->userLayer;
-            $this->userStyle = $updatedSource->userStyle;
-            $this->remoteWfs = $updatedSource->remoteWfs;
-            $this->inlineFeature = $updatedSource->inlineFeature;
-            $this->remoteWcs = $updatedSource->remoteWcs;
+            $this->fees = $updated->fees;
+            $this->accessConstraints = $updated->accessConstraints;
+            $this->layerLimit = $updated->layerLimit;
+            $this->maxWidth = $updated->maxWidth;
+            $this->maxHeight = $updated->maxHeight;
+            $this->userLayer = $updated->userLayer;
+            $this->userStyle = $updated->userStyle;
+            $this->remoteWfs = $updated->remoteWfs;
+            $this->inlineFeature = $updated->inlineFeature;
+            $this->remoteWcs = $updated->remoteWcs;
 
-            $this->getCapabilities = $updatedSource->getCapabilities;
-            $this->getMap = $updatedSource->getMap;
-            $this->getFeatureInfo = $updatedSource->getFeatureInfo;
-            $this->describeLayer = $updatedSource->describeLayer;
-            $this->getLegendGraphic = $updatedSource->getLegendGraphic;
-            $this->getStyles = $updatedSource->getStyles;
-            $this->putStyles = $updatedSource->putStyles;
+            $this->getCapabilities = $updated->getCapabilities;
+            $this->getMap = $updated->getMap;
+            $this->getFeatureInfo = $updated->getFeatureInfo;
+            $this->describeLayer = $updated->describeLayer;
+            $this->getLegendGraphic = $updated->getLegendGraphic;
+            $this->getStyles = $updated->getStyles;
+            $this->putStyles = $updated->putStyles;
             /* overwrite end */
 
             if (count($this->keywords->toArray()) > 0) {
-                if (count($updatedSource->keywords->toArray()) > 0) {
+                if (count($updated->keywords->toArray()) > 0) {
                     
                 } else {
                     
                 }
             } else {
-                $this->keywords = $updatedSource->keywords;
+                $this->keywords = $updated->keywords;
             }
+//            return true;
+//        } else {
+//            return false;
+//        }
+    }
+    private function updateLayers(WmsLayerSource $old, WmsLayerSource $updated)
+    {
+        for($num = 0; $num < $old->getSublayer()->count() - 1; $num++){
+            $oldChild = $old->getSublayer()->get($num);
+            $updatedChild = $updated->getSublayer()->get($num);
+            $this->updateLayers($oldChild, $updatedChild);
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    private function resetInstance(WmsInstance $instance)
+    {
+        $instance->setTitle($this->getTitle());
+        $formats = $this->getGetMap()->getFormats();
+        if (!in_array($instance->getFormat(), $formats)) {
+            $instance->setFormat(count($formats) > 0 ? $formats[0] : null);
+        }
+        $infoformats = $this->getGetFeatureInfo() !== null ?
+            $this->getGetFeatureInfo()->getFormats() : array();
+        if (count($infoformats) === 0) {
+            $instance->setInfoformat(null);
+        } else if ($instance->getInfoformat() !== null || !in_array($instance->getInfoformat(), $infoformats)) {
+            $instance->setInfoformat($infoformats[0]);
+        }
+        $excformats = $this->getExceptionFormats();
+        if (count($excformats) === 0) {
+            $instance->setExceptionformat(null);
+        } else if ($instance->getExceptionformat() !== null && !in_array($instance->getExceptionformat(), $excformats)) {
+            $instance->setExceptionformat($excformats[0]);
+        }
+//        $instance->setOpacity(100);
+//        $num = 0;
+        $wmslayer_root = $this->getRootlayer();
+        $instLayer_root = $instance->getRootlayer();
+//        $instLayer_root->setWmsinstance($instance);
+        $instLayer_root->setWmslayersource($wmslayer_root);
+        $instLayer_root->setTitle($wmslayer_root->getTitle());
+        // @TODO min max from scaleHint
+        $instLayer_root->setMinScale(
+            $wmslayer_root->getScaleRecursive() !== null ?
+                $wmslayer_root->getScaleRecursive()->getMin() : null);
+        $instLayer_root->setMaxScale(
+            $wmslayer_root->getScaleRecursive() !== null ?
+                $wmslayer_root->getScaleRecursive()->getMax() : null);
+        $queryable = $wmslayer_root->getQueryable();
+        $instLayer_root->setInfo(Utils::getBool($queryable));
+        $instLayer_root->setAllowinfo(Utils::getBool($queryable));
+
+        $instLayer_root->setToggle(true);
+        $instLayer_root->setAllowtoggle(true);
+
+        $instLayer_root->setPriority($num);
+        $instance->addLayer($instLayer_root);
+        $this->addSublayer($instLayer_root, $wmslayer_root, $num, $instance);
+        return $instance;
     }
 
 }

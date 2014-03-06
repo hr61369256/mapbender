@@ -252,6 +252,12 @@ abstract class SourceInstance
      */
     public abstract function copy(EntityManager $em);
     
+    /**
+     * Copies a source instance
+     * @param EntityManager $em
+     */
+    public abstract function update(SourceInstance $em);
+    
     
     public function __toString()
     {

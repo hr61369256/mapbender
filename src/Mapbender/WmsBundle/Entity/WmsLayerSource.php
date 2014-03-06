@@ -1115,15 +1115,15 @@ class WmsLayerSource
     /**
      * @inheritdoc
      */
-    public function updateFromSource(WmsLayerSource $updatedLayer)
+    public function updateLayer(WmsLayerSource $updated)
     {
-        if ($this->isUpdateable($updatedLayer)) {
-            $this->title = $updatedLayer->title;
-        }
-//	$this->originUrl = $updatedWmsSource->originUrl;
-//	$this->name = $updatedWmsSource->name;
-//	$this->version = $updatedWmsSource->version;
-//	$this->onlineResource = $updatedWmsSource->onlineResource;
+//        if ($this->isUpdateable($updated)) {
+//            $this->title = $updated->title;
+//        }
+//        $this->originUrl = $updatedWmsSource->originUrl;
+//        $this->name = $updatedWmsSource->name;
+//        $this->version = $updatedWmsSource->version;
+//        $this->onlineResource = $updatedWmsSource->onlineResource;
     }
 
 }

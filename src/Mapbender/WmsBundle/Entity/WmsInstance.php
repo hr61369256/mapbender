@@ -753,5 +753,21 @@ class WmsInstance extends SourceInstance
             $this->copyLayerRecursive($em, $instCloned, $sublayer, $cloned);
         }
     }
-
+//    
+//    /**
+//     * @inheritdoc
+//     */
+//    public function isUpdateable(Source $updatedSource)
+//    {
+////        if($this->)
+//        return true;
+//    }
+    /**
+     * @inheritdoc
+     * 
+     * @param \Mapbender\WmsBundle\Entity\WmsInstance $updated
+     */
+    public function update(SourceInstance $updated){
+        
+    }
 }

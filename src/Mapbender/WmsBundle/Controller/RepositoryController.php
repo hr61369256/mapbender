@@ -272,15 +272,21 @@ class RepositoryController extends Controller
             return $this->redirect($this->generateUrl(
                         "mapbender_manager_repository_view", array(), true));
         }
-
-        if ($wmssourceToUpdate->isUpdateable($wmssource)) {
-            $wmssourceToUpdate->updateFromSource($wmssource);
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->getConnection()->beginTransaction();
+        try {
+            $wmssourceToUpdate->updateSource($wmssource);
+            $wmssource->persist($wmssourceToUpdate);
+            $em->flush();
+            $em->getConnection()->commit();
             $this->get('session')->setFlash('success', "The Wms Source has been updated.");
             return $this->redirect($this->generateUrl(
                         "mapbender_manager_repository_view",
                         array(
                         "sourceId" => $wmssourceToUpdate->getId()), true));
-        } else {
+        } catch (\Exception $ex) {
+            $em->getConnection()->rollback();
+            $em->close();
             $this->get("logger")->debug("The Wms Source can not be updated.");
             $this->get('session')->setFlash('error', "The Wms Source can not be updated.");
             return $this->redirect($this->generateUrl(
